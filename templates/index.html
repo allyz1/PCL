@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Myopia and the Endgame for Airdrops</title>
+    <link rel="stylesheet" href="https://latex.now.sh/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        body {
+            color: #151729;
+            /* Dark blue color */
+            font-size: 18px;
+        }
+
+        body.latex-dark {
+            background-color: #151729;
+            /* Dark background for dark mode */
+            color: white;
+            /* Light text for dark mode */
+            font-family: 'Crimson Text', Arial;
+            /* Apply Crimson Text in dark mode */
+        }
+
+        #dark-mode-toggle {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            z-index: 1000;
+        }
+
+        #myImg {
+            width: 100%;
+            cursor: pointer;
+            padding: 20px;
+            box-sizing: border-box;
+            /* Include padding in width/height */
+        }
+
+        /* Modal Image Viewer */
+        #myModal {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Stay in place */
+            z-index: 1;
+            /* Sit on top */
+            padding-top: 100px;
+            /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%;
+            /* Full width */
+            height: 100%;
+            /* Full height */
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.9);
+            /* Black w/ opacity */
+        }
+
+        /* The Close Button */
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Modal Content (Image) */
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 1200px;
+        }
+
+        .gold-link {
+            color: #E9B737;
+            /* Normal state color */
+            text-decoration: none;
+            /* Optional: removes underline */
+        }
+
+        .gold-link:hover {
+            color: rgb(251, 234, 139);
+            /* Color on hover */
+            text-decoration: underline;
+            /* Optional: adds underline on hover */
+        }
+
+        .logo {
+            width: 35%;
+            /* Makes the image width 50% of its container */
+            display: block;
+            /* Optional: makes the image block level which affects how it interacts with surrounding elements */
+            margin: auto;
+            /* Optional: centers the image horizontally if it's smaller than the container */
+        }
+
+        .icon {
+            width: 10%;
+            /* Makes the image width 50% of its container */
+            display: block;
+            /* Optional: makes the image block level which affects how it interacts with surrounding elements */
+            margin: auto;
+            /* Optional: centers the image horizontally if it's smaller than the container */
+        }
+
+        /* Hide the light logo by default */
+        .dark-mode-logo {
+            display: none;
+        }
+
+        /* When in dark mode, hide the dark logo and show the light logo */
+        body.latex-dark .normal-logo {
+            display: none;
+        }
+
+        body.latex-dark .dark-mode-logo {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <i style="text-align: left;" id="dark-mode-toggle" class="fas fa-moon"></i>
+    <h1 style="text-align: center;">Crypto Myopia and the Endgame for Airdrops</h1>
+    <img src="{{ url_for('static', filename='images/dark icon.png') }}" alt="Dark Logo" class="icon normal-logo">
+    <img src="{{ url_for('static', filename='images/light icon.png') }}" alt="Light Logo" class="icon dark-mode-logo">
+    <p class="author">Pantera Cryptoeconomics Lab <br> May 10, 2024</p>
+    <p> </p>
+    <p style="text-align: center;"><em>A classic story in Silicon Valley startup lore is Paypal’s decision to pay people
+            $10 to use their product. The
+            reasoning was that if you could pay people to join eventually the network value would be sufficiently high
+            that
+            new people would join for free and you could stop paying. It certainly seemed to work, as PayPal was able to
+            stop paying and continue growing, thereby bootstrapping its network effects.</em></p>
+
+    <p style="text-align: center;"> <em>In crypto, we have adopted and extended this approach with airdrops, paying
+            people not just to join but typically
+            to use our products for some period.</em><br>...</p>
+    <p> <br> </p>
+
+    <p> Airdrops have become a multifaceted tool used to reward early users, decentralize protocol governance, and,
+        frankly, to market something new. Formalizing the distribution criteria has become an art, particularly when
+        determining who should be rewarded and the value attributed to their efforts. In this context, both the quantity
+        of tokens distributed and the timing of their release, often through mechanisms like vesting or gradual release,
+        play significant roles. These decisions should be grounded in systematic analysis rather than relying on
+        guesswork, sentiment, or precedents. Using a more quantitative framework ensures fairness and strategic
+        alignment with long-term objectives.</p>
+
+    <p>The <a
+            href="https://ocw.mit.edu/courses/14-13-psychology-and-economics-spring-2020/507249b30e34d9cb4040d15677d7519e_MIT14_13s20_rec2.pdf"
+            target="_blank" class="gold-link">quasi-hyperbolic discounting model</a> provides a mathematical framework
+        to explore how individuals make choices
+        involving trade-offs between rewards at different times. Its application is particularly relevant in areas where
+        impulsivity and inconsistency over time significantly influence decision-making, such as financial decisions and
+        health-related behaviors.</p>
+
+    <p>The model is driven by two population-specific
+        parameters: present bias, \(\beta\), and the discount factor, \(\delta\).</p>
+    <h3>Present Bias (\(\beta\)):</h3>
+
+    <p>This parameter measures the tendency of
+        individuals to prioritize immediate rewards over those that are further away
+        disproportionately. It varies between 0 and 1, where a value of 1 indicates no
+        present bias, reflecting a balanced, time-consistent evaluation of future
+        rewards. As values approach 0, they signify an increasingly strong present
+        bias, indicating a heightened preference for immediate rewards.</p>
+
+    <p>For instance, given the choice between $50
+        today or $100 in a year, a person with a high present bias (closer to 0) will
+        prefer the $50 immediately rather than waiting for the larger sum.</p>
+
+    <h3>Discount Factor (\(\delta\)):</h3>
+
+    <p>This parameter describes the rate at which the
+        value of future rewards diminishes as the time until their realization
+        increases, accounting for the natural decline in their perceived value with
+        delay. The discount factor is more accurately quantified over longer,
+        multi-year intervals. When assessing two options in the short term (less than
+        one year), this factor exhibits considerable variability as immediate
+        circumstances can disproportionately influence perception.</p>
+
+    <p>For generalized populations, studies show the
+        discount rate is usually around 0.9. However, this value is often substantially
+        lower among groups with gambling tendencies. <a
+            href="https://link.springer.com/content/pdf/10.1007/s10899-021-10054-x.pdf" target="_blank"
+            class="gold-link">Research</a>
+        indicates that habitual
+        gamblers typically exhibit a mean discount factor slightly below 0.8, whereas
+        problem gamblers tend to have a discount factor closer to 0.5.<label for="sn-1"
+            class="sidenote-toggle sidenote-number"></label>
+        <input type="checkbox" id="sn-1" class="sidenote-toggle" />
+        <span class="sidenote">
+            Problem gamblers are individuals who meet several criteria for pathological gambling and exhibit significant
+            gambling-related issues, while habitual gamblers engage in regular gambling activities but do not exhibit
+            the pathological behaviors associated with problem gambling.</span>
+    </p>
+
+    <p>Using the above terms, we can express the
+        utility \(U\) of receiving a reward \(x\) at time \(t\) through the following
+        formula:</p>
+    <p style="text-align: center;">\( U(t) = \beta \delta^t U(x) \)</p>
+    <p>This model captures how the value of rewards
+        varies depending on their timing: immediate rewards are evaluated at full
+        utility, while future rewards are adjusted downward in value, factoring in both
+        the present bias and the exponential decay dictated by &#120575;.</p>
+
+    <p>Last year, Pantera Cryptoeconomics Lab conducted a <a
+            href="https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=d06fd68cfff142faf4c8f482730b1c1e52401e66"
+            target="_blank" class="gold-link">study</a>
+        to quantify the behavioral tendencies of crypto users. We surveyed
+        participants with two straightforward questions designed to gauge their
+        preference for immediate payment versus receiving some future value.<label for="sn-1"
+            class="sidenote-toggle sidenote-number"></label>
+        <input type="checkbox" id="sn-1" class="sidenote-toggle" />
+        <span class="sidenote left">Guidelines and methodology for the study derived from the hyperlinked
+            text</span>This
+        approach helped us ascertain representative values for both \(\beta\) and \(\delta\). Our
+        findings revealed that the representative sample of crypto users exhibits a
+        present bias just above 0.4 and a notably low discount factor.
+    </p>
+
+
+    <img id="myImg" src="{{ url_for('static', filename='images/Crypto impatience_v1.png') }}"
+        alt="Crypto user impatience" style="width:100%;cursor:pointer">
+
+    <p>The study revealed an <a href="https://www.zora.uzh.ch/id/eprint/130217/1/How_Time_Preferences_Differ.pdf"
+            target="_blank" class="gold-link">above-average</a> present
+        bias and a notably low discount factor among crypto users, suggesting a
+        tendency towards impatience and a preference for immediate gratification over
+        future gains.<label for="sn-1" class="sidenote-toggle sidenote-number"></label>
+        <input type="checkbox" id="sn-1" class="sidenote-toggle" />
+        <span class="sidenote">Baseline data shown in graphic represents the average for each parameter
+            based on a study conducted on over 53 countries</span>
+        This can be attributed to several interconnected factors within
+        the crypto landscape:
+    </p>
+    <ul>
+        <li><strong>Cyclical Market Behavior: </strong> The
+            crypto market is known for its volatility and cyclical nature, with tokens
+            often experiencing rapid value fluctuations. This periodicity influences
+            user behavior, as many are accustomed to navigating through these cycles
+            rather than adopting the long-term investment strategies more common in
+            traditional finance. The frequent ups and downs may lead users to discount
+            future values more steeply, wary of potential downturns that could erase
+            profits.</li>
+        <li><strong>Stigma Around Tokens:</strong> The
+            survey specifically asked about tokens and their perceived future value,
+            which could have highlighted an ingrained stigma associated with
+            token-specific trading. The stigma, tied to the periodic and often
+            speculative nature of token valuations, reinforces a cautious approach to
+            long-term investments in the crypto space. Additionally, suppose the
+            survey had measured preferences using a fiat currency or another form of
+            reward. In that case, the discount rates of crypto users might align more
+            closely with global averages, suggesting that the nature of the reward
+            could significantly influence the observed discounting behavior.</li>
+        <li><strong>Speculative Nature of Crypto Applications:</strong>
+            Today's crypto ecosystem is deeply rooted in speculation and
+            trading, traits that are prevalent in its most successful applications.
+            This tendency highlights that current users overwhelmingly favor
+            speculative platforms, a preference reflected in the survey results, which
+            show a strong inclination towards immediate financial gains.</li>
+
+    </ul>
+    <p>While the study's results may diverge from
+        typical human behavior norms, they reflect the characteristics and tendencies
+        of the current cryptocurrency user base. This distinction is especially
+        pertinent for projects designing airdrops and token distributions, as
+        understanding these unique behaviors allows for more strategic planning and
+        reward system structuring.</p>
+
+    <p>Take, for example, the approach by <a href="https://twitter.com/DriftProtocol" target="_blank"
+            class="gold-link">Drift</a>, a
+        perps DEX on Solana, which is gearing up to launch its native token. Drift has
+        included a time-delay mechanism in their token distribution strategy, offering
+        to double the rewards for users who wait 6 hours after the token launch to
+        claim their airdrop. The time delay was added to mitigate the congestion
+        typically caused by bots at the outset of airdrops and potentially help
+        stabilize the token's performance by reducing the initial surge of sellers.</p>
+
+    <p>Based on our presented research, with a
+        doubled value for the reward, Drift could have delayed a few months and
+        statistically should have appeased most of their end users. With the airdrop
+        criteria as is, we expect almost all users to wait 6 hours to claim, as the
+        discount associated with this time difference is negligible in the eyes of the
+        model.</p>
+    <p><br></p>
+    <img src="{{ url_for('static', filename='images/dark logo.png') }}" alt="Dark Logo" class="logo normal-logo">
+    <img src="{{ url_for('static', filename='images/light logo.png') }}" alt="Light Logo" class="logo dark-mode-logo">
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="img01">
+    </div>
+    <script>
+        const toggleIcon = document.getElementById("dark-mode-toggle");
+        toggleIcon.addEventListener('click', function () {
+            document.body.classList.toggle("latex-dark");
+            if (document.body.classList.contains("latex-dark")) {
+                toggleIcon.classList.remove("fa-moon");
+                toggleIcon.classList.add("fa-sun");
+            } else {
+                toggleIcon.classList.remove("fa-sun");
+                toggleIcon.classList.add("fa-moon");
+            }
+        });
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the image and insert it inside the modal - use its "alt" text as a caption
+        var img = document.getElementById("myImg");
+        var modalImg = document.getElementById("img01");
+        var captionText = document.getElementById("caption");
+        img.onclick = function () {
+            modal.style.display = "block";
+            modalImg.src = this.src;
+            modalImg.alt = this.alt;
+            captionText.innerHTML = this.alt;
+        }
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function () {
+            modal.style.display = "none";
+        }
+    </script>
+
+
+</body>
+
+</html>
