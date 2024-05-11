@@ -1,5 +1,5 @@
-
 from flask import Flask, render_template
+from aws_lambda_wsgi import adapter
 
 app = Flask(__name__)
 
@@ -7,5 +7,6 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# AWS Lambda handler
+def lambda_handler(event, context):
+    return adapter.handle_request(app, event, context)
