@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from aws_lambda_wsgi import adapter
+from mangum import Mangum
 
 app = Flask(__name__)
 
@@ -7,6 +7,5 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-# AWS Lambda handler
-def lambda_handler(event, context):
-    return adapter.handle_request(app, event, context)
+# Wrap Flask application with Mangum
+handler = Mangum(app)
